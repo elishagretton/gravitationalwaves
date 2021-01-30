@@ -1,6 +1,5 @@
 # gravitationalwaves
-Used Python to analyse spectograms from real gravitational-wave data of the LIGO experiment.
- - Look at brief to see exact assignment.
+Used Python to analyse spectograms from real gravitational-wave data of the LIGO experiment. Look at brief to see exact assignment.
 Skills:
  - used pandas, numpy, matplotlib modules in Python
  - research on gravitiational waves
