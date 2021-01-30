@@ -1,0 +1,64 @@
+\documentclass{beamer}
+\usepackage{amsmath}
+\usepackage{wrapfig}
+\usepackage{float}
+\setbeamersize{text margin left=5pt,text margin right=5pt}
+\title{MAS212 Assignment 3: Gravitational Waves}
+\author{180188196}
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\def\code#1{\texttt{#1}}
+\date{}
+\begin{document}
+\begin{frame}
+\maketitle
+\end{frame}
+\begin{frame}
+\frametitle{(1) Introduction}
+\begin{figure}
+\includegraphics[width=0.3\linewidth]{pic1.jpg} \footnotemark
+\end{figure}
+\small{\footnotetext[1]{Image: \url{https://www.extremetech.com/extreme/222852-what-are-gravitational-waves-and-where-does-physics-go-from-here-now-that-weve-found-them}}}
+\begin{itemize}\item Gravitational waves are often described as 'ripples in space' due to the fact they are invisible, energy-carrying waves that propagate through a gravitational field.
+\item In 1916, Einstein predicted that gravitational waves occur when two bodies orbit each other in his general theory of relativity. These waves squeeze or stretch anything that come into their path.
+\item The Laser Interferometer Gravitational-wave Observatory (LIGO) first detected gravitational waves on Earth in $1915.$ This was as a result of the aftermath of two black holes colliding into one another $1.3$ billion years ago.\footnotemark \end{itemize} 
+\footnotetext[2]{NASA Science: \url{https://spaceplace.nasa.gov/gravitational-waves/en/}}
+\end{frame}
+\begin{frame}
+\frametitle{(2) The signal.} \centerline{
+\includegraphics[width=0.7\textwidth]{freqvstime.png}}
+\begin{itemize}\item \small{As the time increases, the frequency of the signal starts to increase slowly and then quickly at around $-2$s to $0$s. The rate of frequency increases quickly in this region as the two bodies start to orbit one another quicker so start to get closer and closer together. As they are closer together, it is easier for them to orbit one another even faster, so the frequency increases more quickly here.} \end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{(3) The model.}\begin{itemize} \item
+The astronomer asks us to fit the data using a particular model: \begin{equation}f(t) = \frac{5}{8\pi}(\frac{5GM}{c^3})^{\frac{-5}{8}}(t_0 - t)^\frac{-3}{8}\end{equation}
+ \item $G = 6.674 x10^{-11} m^3kg^{-1}s^{-2}$ is Newtons's gravitational constant \item $c= 2.998 x10^8 ms^{-1}$ is the speed of light \item $t_0$ is the time of when the two bodies merge together \item $M$ is the chirp mass. 
+ \item The frequency $f(t)$ is an increasing function of time as the two bodies give out gravitational waves when they orbit one another. This causes them to get closer and closer together as they begin to orbit each other at a faster rate so are more attracted to one another. In turn, the gravitational waves get stronger and the frequency is always increasing as time goes on as the number of orbits increases.
+\end{itemize} \end{frame}
+\begin{frame}[fragile]
+\frametitle{(4) Fitting a model: theory}
+\begin{itemize} \item Consider a linear model with $m$ parameters $ f(x;\beta_j) = \sum_{j=0}^{m-1} \beta_j\phi_j(x)$ and a data set with $N$ data points, such that $N > m.$ 
+\item To fit a linear model, we find parameters $\beta_j$ that minimise the sum of squared residuals (the difference between the $\textbf{y}$ data and model). Let $S$ be the sum of squared residuals, $ S = \sum_{i=1}^{N} (y_i - f(x_i;\beta_j))^2.$
+\item Calculate the partial derivatives $\frac{\partial S}{\partial \beta_j}$ and set them to zero, which rearrange to give the normal equations $$\vec{(X^TX)}\boldsymbol\beta= \vec{X^Ty}$$
+\item Here $\boldsymbol\beta = (\beta_0, \beta_1,...,\beta_{m-1})$ are the the fit parameters, $\vec{X}$ is an $N$ x $m$ matrix with rows $[1,t_i^2,t_i^2,...,t_i^{2n}]$ and $\vec{y}$ is the data set with $N$ values.
+\item Gaussian elimination solves the normal equations, which gives us the best fit parameters $\boldsymbol\beta.$
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{(5) Fitting a model: result}
+\begin{itemize}
+\item Consider the linear model $f(t;\beta_j) = (t_0-t)^\frac{-3}{8}$ where $t_0$ equals zero. Let the vector $\vec{X}$ store the outputs of $f(t;\beta_j)$ when all the values of time are inputted from our csv file. This is transposed to get $\vec{X^T}$ and $\vec{y}$ is a vector containing the frequencies imported from our data.
+\item Input these vectors into the normal equation and then use \code{np.linalg.solve}$(X^TX, X^Ty)$ to get the best fit parameter in $\boldsymbol\beta.$ Equate the first half of equation $(1)$ to $\boldsymbol\beta$ and rearrange to get chirp mass. This gives me \boldmath$2.15198387 x 10^{30}kg.$
+\centerline{\includegraphics[width=0.5\textwidth]{bestfitmodel.png}}
+\item To get chirp mass in units of the solar mass, I get $\frac{4.28029592x10^{60}}{1.989 x 10^{30}}$kg.
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{(6a) The Chirp Mass}
+\begin{itemize} \item The formula for chirp mass $M$ $$M=\frac{(m_1m_2)^{\frac{3}{5}}}{(m_1+m_2)^{\frac{1}{5}}}$$ where $m_1$ and $m_2$ are the masses of two bodies.\footnotemark \item If $m_1 = m_2$, then $M = \frac{(m_1^2)^{\frac{3}{5}}}{(2m_1)^{\frac{1}{5}}} = \frac{m_1^{\frac{6}{5}}}{2^{\frac{1}{5}}m_1^{\frac{1}{5}}} = \frac{m_1}{2^{\frac{1}{5}}}.$ This rearranges to $m_1 = 2^{\frac{1}{5}}M.$
+\item Neutron stars are known to have masses in range $1.17$\(M_\odot\)$- 2.16$\(M_\odot\), where \(M_\odot\) $ = 1.989 x10^{30}$, the mass of the Sun. The chirp mass of a neutron star ranges from $2.03 x10^{30} - 3.74 x10^{30}$, to two decimal places. The chirp mass of the gravitational wave chirp I modelled is equal to $2.15 x 10^{30}kg.$, which lies inside the range of chirp mass for a neutron star. Therefore the gravitational wave chirp could have been created by two neutron stars.
+
+\footnotetext[3]{\url{https://en.wikipedia.org/wiki/Chirp_mass
+}}
+\end{itemize}
+\end{frame}
+\end{document}
